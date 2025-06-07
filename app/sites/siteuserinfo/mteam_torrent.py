@@ -59,7 +59,7 @@ class MTeamTorrentUserInfo(_ISiteUserInfo):
         res = RequestUtils(
             headers={
                 'x-api-key': self._apikey,
-                "Content-Type": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
                 "User-Agent": self._ua,
                 "Accept": "application/json"
             },
@@ -80,13 +80,13 @@ class MTeamTorrentUserInfo(_ISiteUserInfo):
                 sysrole._nameEng = result.get("nameEng")
                 sysrole._image = result.get("image")
                 sysrole._color = result.get("color")
-                sysrole._readAccess = int(result.get("readAccess"))
-                sysrole._classUp = int(result.get("classUp"))
-                sysrole._registerWeek = int(result.get("registerWeek"))
-                sysrole._downloaded = int(result.get("downloaded"))
-                sysrole._shareRate = int(result.get("shareRate"))
-                sysrole._shareRateLimit = int(result.get("shareRateLimit"))
-                sysrole._sortPoint = int(result.get("sortPoint"))
+                sysrole._readAccess = int(float(result.get("readAccess")))
+                sysrole._classUp = int(float(result.get("classUp")))
+                sysrole._registerWeek = int(float(result.get("registerWeek")))
+                sysrole._downloaded = int(float(result.get("downloaded")))
+                sysrole._shareRate = int(float(result.get("shareRate")))
+                sysrole._shareRateLimit = int(float(result.get("shareRateLimit")))
+                sysrole._sortPoint = int(float(result.get("sortPoint")))
                 g_sys_role_list.append(sysrole)
             log.info(f"【MTeamUserInfo】 获取馒头系统角色成功，共有{len(g_sys_role_list)}个角色")
         elif res is not None:
@@ -105,7 +105,7 @@ class MTeamTorrentUserInfo(_ISiteUserInfo):
         res = RequestUtils(
             headers={
                 'x-api-key': self._apikey,
-                "Content-Type": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
                 "User-Agent": self._ua,
                 "Accept": "application/json"
             },
@@ -156,9 +156,9 @@ class MTeamTorrentUserInfo(_ISiteUserInfo):
         # 积分
         self.bonus = memberCount.get("bonus", 0)
         # 上传
-        self.upload = int(memberCount.get("uploaded", 0))
+        self.upload = int(float(memberCount.get("uploaded", 0)))
         # 下载
-        self.download = int(memberCount.get("downloaded", 0))
+        self.download = int(float(memberCount.get("downloaded", 0)))
         # 拉取做种信息
         self._mt_get_seeding_info()
         # 拉取下载信息
